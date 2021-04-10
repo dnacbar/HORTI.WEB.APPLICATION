@@ -1,0 +1,21 @@
+<div [config]="{ backdrop: 'static', focus: true }" bsModal #staticModal="bs-modal" aria-labelledby="dialog-auto-name">
+    <div class="modal-content bg-dark">
+        <div class="modal-header">
+            <h4 class="modal-title pull-left" [ngClass]="{ 'text-success': modalModel.EnumType == 0, 
+                'text-warning': modalModel.EnumType == 1, 'text-danger': modalModel.EnumType == 2}">
+                HORTI{{modalModel.DsTitle}}</h4>
+            <button type="button" class="btn-close btn-close-white" autofocus aria-label="Close" (click)="hideModal()"></button>
+        </div>
+        <div class="modal-body">
+            <p [ngClass]="{'text-success': modalModel.EnumType == 0, 'text-warning': modalModel.EnumType == 1, 
+                        'text-danger': modalModel.EnumType == 2}">
+                {{modalModel.DsMessage}}</p>
+        </div>
+        <div class="modal-footer"></div>
+        <div *ngIf="false" class="d-grid gap-1 p-1">
+            <button class="btn btn-outline-success" type="button" routerLink="./password">Forgot
+                Password?</button>
+            <button class="btn btn-outline-success" type="button" routerLink="./account">Create Account</button>
+        </div>
+    </div>
+</div>

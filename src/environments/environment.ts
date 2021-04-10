@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  urlBaseCommand: 'http://localhost:9000/',
-  urlBaseQuery: 'http://localhost:8000/'
+  urlBaseCoreCommand: 'http://localhost:8000/',
+  urlBaseCoreQuery: 'http://localhost:8001/',
+  urlBaseUserCommand: 'http://localhost:5000/',
+  urlBaseUserQuery: 'http://localhost:5001/',
 };
 
 /*

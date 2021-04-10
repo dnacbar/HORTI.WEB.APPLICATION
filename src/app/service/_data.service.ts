@@ -1,5 +1,4 @@
-import { environment } from './../../environments/environment';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { timeout, catchError } from 'rxjs/operators';
@@ -13,50 +12,53 @@ export class DataService {
   constructor(private httpClient: HttpClient) { }
 
   // QUERY
-  public GetObject<T>(url: string, signature: Signature): Observable<T> {
-    return this.httpClient.post<T>(this.urlBaseQuery + url, signature, this.httpOptions)
+  public GetObject(url: string, signature: Signature): Observable<Object> {
+    return this.httpClient.post(url, signature, this.httpOptions)
       .pipe(timeout(2000), catchError(x => { console.log(x); return throwError(x); }));
   }
 
-  public GetListOfObject<T>(url: string, signature: Signature): Observable<Array<T>> {
-    return this.httpClient.post<Array<T>>(this.urlBaseQuery + url, signature, this.httpOptions)
+  public GetListOfObject(url: string, signature: Signature): Observable<Object> {
+    return this.httpClient.post(url, signature, this.httpOptions)
       .pipe(timeout(8000), catchError(x => { console.log(x); return throwError(x); }));
   }
 
-  public GetFullListOfObject<T>(url: string): Observable<Array<T>> {
-    return this.httpClient.post<Array<T>>(this.urlBaseQuery + url, null, this.httpOptions)
+  public GetFullListOfObject(url: string): Observable<Object> {
+    return this.httpClient.get(url, this.httpOptions)
       .pipe(timeout(20000), catchError(x => { console.log(x); return throwError(x); }));
   }
 
   // COMMAND
-  public CreateObject(url: string, signature: Signature): Observable<HttpResponse<Object>> {
-    return this.httpClient.post<HttpResponse<Object>>(this.urlBaseCommand + url, signature, this.httpOptions)
+  public CreateObject(url: string, signature: Signature): Observable<Object> {
+    return this.httpClient.post(url, signature, this.httpOptions)
       .pipe(timeout(1500), catchError(x => { console.log(x); return throwError(x); }));
   }
 
-  public UpdateObject(url: string, signature: Signature): Observable<HttpResponse<Object>> {
-    return this.httpClient.put<HttpResponse<Object>>(this.urlBaseCommand + url, signature, this.httpOptions)
+  public UpdateObject(url: string, signature: Signature): Observable<Object> {
+    return this.httpClient.put(url, signature, this.httpOptions)
       .pipe(timeout(1500), catchError(x => { console.log(x); return throwError(x); }));
   }
 
-  public DeleteObject(url: string, signature: Signature): Observable<HttpResponse<Object>> {
+  public DeleteObject(url: string, signature: Signature): Observable<Object> {
     const options = {
       headers: this.httpOptions.headers,
       response: this.httpOptions.response,
       body: signature
     };
-    return this.httpClient.request<HttpResponse<Object>>('delete', this.urlBaseCommand + url, options)
+    return this.httpClient.request('delete', url, options)
       .pipe(timeout(1500), catchError(x => { console.log(x); return throwError(x); }));
+  }
+
+  public Get(url: string): Observable<Object> {
+    return this.httpClient.get(url, this.httpOptions)
+      .pipe(timeout(100), catchError(x => { console.log(x); return throwError(x); }));
   }
 
   // CONFIG
   private httpOptions = {
     headers: new HttpHeaders({
       'content-type': 'application/json',
-      'DN-MR-WASATAIN': 'HORTI'
+      'DN-MR-WASATAIN-COMMAND-QUERY': 'HORTI',
     }),
     response: 'json'
   };
-  private urlBaseCommand = environment.urlBaseCommand;
-  private urlBaseQuery = environment.urlBaseQuery;
 }

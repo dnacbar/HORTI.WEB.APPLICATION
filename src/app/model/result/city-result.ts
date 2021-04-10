@@ -1,5 +1,12 @@
 export class CityResult {
-    public Id: number | undefined;
-    public City: string | undefined;
-    public State: number | undefined;
+    constructor() {
+        
+    }
+    Id = new Number;
+    City = new String;
+    IdState = new Number;
+
+    public isValid(): boolean {
+        return true;
+    }
 }

@@ -1,0 +1,13 @@
+<div [config]="{ show: true }" (onHide)="hideModal()" bsModal #userModal="bs-modal" class="modal fade" tabindex="-1"
+    role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-dark">
+            <router-outlet></router-outlet>
+            <hr class="bg-success" />
+            <div class="d-grid gap-1 p-1">
+                <button *ngIf="password" class="btn btn-outline-success" type="button" routerLink="./password"(click)="password=false">Esqueceu a senha?</button>
+                <button *ngIf="account" class="btn btn-outline-success" type="button" routerLink="./account" (click)="account=false">Criar Conta?</button>
+            </div>
+        </div>
+    </div>
+</div>

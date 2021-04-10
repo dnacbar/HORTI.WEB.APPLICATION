@@ -22,7 +22,6 @@ export class CityComponent implements OnInit, OnDestroy {
     this.cityService.GetCities(signature)
       .pipe(takeUntil(this.subject$))
       .subscribe(x => {
-        this.cityModel = City.ToModel(x);
       }, e => {
         console.log(e);
       });
