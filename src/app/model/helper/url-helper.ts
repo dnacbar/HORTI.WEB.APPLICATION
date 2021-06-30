@@ -1,4 +1,4 @@
-export const UrlCoreCommand = {
+export const UrlCoreCommandHelper = {
     client: {
         updateClient: 'Client/UpdateClient'
     },
@@ -9,7 +9,7 @@ export const UrlCoreCommand = {
     }
 }
 
-export const UrlCoreQuery = {
+export const UrlCoreQueryHelper = {
     main: {
         get: 'Main'
     },
@@ -20,12 +20,16 @@ export const UrlCoreQuery = {
     }
 }
 
-export const UrlUserCommand = {
+export const UrlUserCommandHelper = {
+    user:{
+        createUser: 'User/CreateUser'
+    }
 }
 
-export const UrlUserQuery = {
+export const UrlUserQueryHelper = {
     userSession: {
         authenticateUserAccess: 'UserAccess/AuthenticateUserAccess',
         logoutUserAccess: 'UserAccess/LogoutUserAccess',
+        get: 'UserAccess'
     }
 }

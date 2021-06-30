@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
-import { Modal } from './../../model/modal';
+//import { Subject } from 'rxjs';
+import { Modal } from '../../model/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
@@ -11,7 +11,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class ModalComponent implements OnInit, OnDestroy {
   public modalModel: Modal = new Modal();
 
-  private subject$ = new Subject();
+  //private subject$ = new Subject();
   constructor(private bsModalRef: BsModalRef) {
   }
   ngOnDestroy(): void {
@@ -20,12 +20,12 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
+
     //timer(0, 1000).pipe(takeUntil(this.subject$))
     //  .subscribe(x => {
     //    if (x > 2)
     //      this.hideModal();
-//
+    //
     //    this.modalModel.DsTitle = (x + 1).toString();
     //  });
   }

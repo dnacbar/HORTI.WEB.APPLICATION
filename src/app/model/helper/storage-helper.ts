@@ -1,3 +1,3 @@
-export const KeyStorage = {
+export const KeyStorageHelper = {
     userAccess: 'userAccess'
 }

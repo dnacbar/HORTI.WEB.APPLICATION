@@ -40,7 +40,6 @@ export class OnlyNumberDirective {
       // Cancela o pressionamento da tecla
       e.preventDefault();
     }
-
   }
 
   // Ao pressionar teclas que produzem um caractere
@@ -72,5 +71,4 @@ export class OnlyNumberDirective {
     this.inputElement.focus();
     document.execCommand('insertText', false, textData);
   }
-
 }

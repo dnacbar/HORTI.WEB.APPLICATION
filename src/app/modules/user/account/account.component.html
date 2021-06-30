@@ -1,17 +1,33 @@
 <div class="p-1">
-    <input [(ngModel)]="userModel.DsLogin" autocomplete="new-user" class="form-control my-1" type="email"
-        placeholder="Email Usuário" aria-label="Email usuário">
-    <input [(ngModel)]="userModel.DsPassword" autocomplete="new-password" class="form-control" type="password"
-        placeholder="Password" aria-label="Password usuário">
-    <input [ngModel]="userModel.DsPhone | phone" (ngModelChange)="userModel.DsPhone=$event" appOnlyNumber class="form-control my-1" type="text" placeholder="Telefone"
-        maxlength="15" aria-label="Telefone do usuário">
-    <div class="form-check">
-        <input [ngModel]="userModel.BoIsProducer" class="form-check-input" type="checkbox" id="ckbProducer"
-            aria-label="Is Producer or Client">
-        <label class="form-check-label text-success" for="ckbProducer">Produtor?</label>
+    <input [(ngModel)]="userModel.DsUserName" class="form-control my-1" type="text"
+        placeholder="Nome" aria-label="Nome do usuário">
+    <input [(ngModel)]="userModel.DsLogin" class="form-control my-1" type="email"
+        placeholder="E-mail" aria-label="E-mail do usuário">
+    <input [(ngModel)]="userModel.DsPassword" autocomplete="new-password" class="form-control my-1" type="password"
+        placeholder="Senha" aria-label="Senha do usuário">
+    <input [(ngModel)]="userModel.DsConfirmPassword" autocomplete="new-password" class="form-control" type="password"
+        placeholder="Confirmar Senha" aria-label="Confirmar Senha do usuário">
+    <input [ngModel]="userModel.DsPhone | phone" (ngModelChange)="userModel.DsPhone=$event" appOnlyNumber
+        class="form-control my-1" type="text" placeholder="Telefone" maxlength="15" aria-label="Telefone do usuário">
+    <div class="card bg-dark border-success">
+        <div class="card-body">
+            <div class="card-title text-success">Qual seu Perfil?</div>
+            <div class="form-check form-check-inline">
+                <input [(ngModel)]="userModel.BoIsProducer" class="form-check-input" type="radio" id="ckbClient"
+                    name="radioProducer" aria-label="Consumidor" [value]="false">
+                <label class="form-check-label text-success" for="ckbClient">Consumidor</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input [(ngModel)]="userModel.BoIsProducer" class="form-check-input" type="radio" id="ckbProducer"
+                    name="radioProducer" aria-label="Produtor" [value]="true">
+                <label class="form-check-label text-success" for="ckbProducer">Produtor</label>
+            </div>
+        </div>
     </div>
+    <hr class="bg-success" />
     <div class="d-grid gap-1">
-        <button class="btn btn-outline-success my-1" type="button" (click)="createAccount()">Criar Conta</button>
-        <button class="btn btn-outline-success" type="button" routerLink="../" (click)="userAccount()">Retornar</button>
+        <button class="btn btn-outline-success" type="button" (click)="createAccount()">Criar Conta</button>
+        <button class="btn btn-outline-success" type="button" routerLink="../"
+            (click)="accountReturnToLogin()">Retornar</button>
     </div>
 </div>

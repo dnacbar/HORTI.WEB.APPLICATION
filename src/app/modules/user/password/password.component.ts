@@ -13,7 +13,7 @@ export class PasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public userPassword(): void {
-    this.userAccessService.emitUserPassword();
+  public passwordReturnToLogin(): void {
+    this.userAccessService.emitPasswordReturn();
   }
 }

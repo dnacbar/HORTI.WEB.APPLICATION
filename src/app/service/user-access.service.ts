@@ -1,11 +1,11 @@
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { UserLogoutSignature } from '../model/signature/user-logout-signature';
-import { UrlUserQuery } from '../model/helper/service-helper';
+import { UrlUserQueryHelper } from '../model/helper/url-helper';
 import { environment } from '../../environments/environment';
 import { UserAccessResult } from '../model/result/user-access-result';
 import { UserAccessSignature } from '../model/signature/user-access-signature';
-import { DataService } from './_data.service';
+import { DataService } from './_shared/_data.service';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
@@ -14,44 +14,51 @@ import { Subject, Observable } from 'rxjs';
 })
 export class UserAccessService {
   private userIsAuthenticatedSubject$ = new Subject<boolean>();
-  private userPasswordSubject$ = new Subject<boolean>();
-  private userAccountSubject$ = new Subject<Boolean>();
-
   public userIsAuthenticated$ = this.userIsAuthenticatedSubject$.asObservable();
-  public userPassword$ = this.userPasswordSubject$.asObservable();
-  public userAccount$ = this.userAccountSubject$.asObservable();
+
+  private passwordReturnSubject$ = new Subject<boolean>();
+  public passwordReturn$ = this.passwordReturnSubject$.asObservable();
+
+  private accountReturnSubject$ = new Subject<Boolean>();
+  public accountReturn$ = this.accountReturnSubject$.asObservable();
 
   constructor(private dataService: DataService,
     private userService: UserService) { }
 
   public authenticateUser(signature: UserAccessSignature): Observable<UserAccessResult> {
-    return this.dataService.GetObject(environment.urlBaseUserQuery + UrlUserQuery.userSession.authenticateUserAccess, signature)
+    return this.dataService.GetObject(environment.urlBaseUserQuery + UrlUserQueryHelper.userSession.authenticateUserAccess, signature)
       .pipe(map(x => {
         return Object.assign(new UserAccessResult, x);
       }));
   }
 
   public logoutUser(signature: UserLogoutSignature): Observable<Object> {
-    return this.dataService.GetObject(environment.urlBaseUserQuery + UrlUserQuery.userSession.logoutUserAccess, signature);
+    return this.dataService.GetObject(environment.urlBaseUserQuery + UrlUserQueryHelper.userSession.logoutUserAccess, signature);
   }
 
-  public verifyUserIsAuthenticated(): boolean {
+  public verifyUserIsAuthenticated(): Observable<boolean> {
+    return this.dataService.Get(environment.urlBaseUserQuery + UrlUserQueryHelper.userSession.get)
+      .pipe(map(() => {
+        return true;
+      }));
+  }
+
+  public verifyUserSessionStorage(): boolean {
     const result = this.userService.getUserStorage();
 
     return !(result.IdSession == '' && result.Login == '' && result.Token == '');
   }
-
 
   // -- Emitter
   public emitUserIsAuthenticated(signature: boolean): void {
     this.userIsAuthenticatedSubject$.next(signature);
   }
 
-  public emitUserPassword(): void {
-    this.userPasswordSubject$.next(true);
+  public emitPasswordReturn(): void {
+    this.passwordReturnSubject$.next(true);
   }
 
-  public emitUserAccount(): void {
-    this.userAccountSubject$.next(true);
+  public emitAccountReturn(): void {
+    this.accountReturnSubject$.next(true);
   }
 }

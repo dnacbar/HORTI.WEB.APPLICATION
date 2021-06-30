@@ -6,7 +6,7 @@ export class Modal {
         this.DsMessage = dsMessage;
         this.EnumType = enumType;
     }
-    public DsTitle = new String;
-    public DsMessage = new String;
-    public EnumType: EnumModal;
+    DsTitle = new String;
+    DsMessage = new String;
+    EnumType: EnumModal;
 }

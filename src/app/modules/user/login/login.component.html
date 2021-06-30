@@ -1,8 +1,10 @@
-<div class="p-1">
-    <input [(ngModel)]="userModel.DsLogin" class="form-control my-1" type="text" placeholder="Email usuário" aria-label="Email do usuário">
+<div class="p-1" ngxUiLoaderBlurred [loaderId]="loaderLogin">
+    <input [(ngModel)]="userModel.DsLogin" class="form-control my-1" type="text" placeholder="Email usuário"
+        aria-label="Email do usuário">
     <input [(ngModel)]="userModel.DsPassword" class="form-control" type="password" placeholder="Password usuário"
         aria-label="Password">
     <div class="d-grid gap-1">
         <button class="btn btn-outline-success my-1" type="button" (click)="authenticateUser()">Acessar</button>
     </div>
+    <ngx-ui-loader bgsColor="green" [loaderId]="loaderLogin"></ngx-ui-loader>
 </div>

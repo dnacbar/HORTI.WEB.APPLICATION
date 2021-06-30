@@ -1,54 +1,74 @@
+//import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MessageHelper } from './model/helper/message-helper';
+import { EnumModal } from './model/enum/modal.enum';
+import { ModalComponent } from './component/modal/modal.component';
+import { ModalService } from './service/modal.service';
+import { UserLogoutSignature } from './model/signature/user-logout-signature';
 import { EnumHttpStatusCode } from './model/enum/status-code.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserAccessService } from './service/user-access.service';
 import { UserService } from './service/user.service';
-import { UrlCoreQuery } from './model/helper/service-helper';
-import { DataService } from './service/_data.service';
 import { User } from './model/user';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { TimeoutError } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { TimeoutError, Subject } from 'rxjs';
+import { Modal } from './model/modal';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   public userModel: User = new User();
   public userIsAuthenticated = false;
+  public verifyService = false;
 
-  constructor(private dataService: DataService,
-    private userAccessService: UserAccessService,
+  private subject$ = new Subject();
+
+  constructor(private userAccessService: UserAccessService,
     private userService: UserService,
+    private modalService: ModalService,
     private router: Router) {
-  }
 
-  ngOnInit(): void {
-    this.dataService.Get(environment.urlBaseCoreQuery + UrlCoreQuery.main.get)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.userIsAuthenticated = this.userAccessService.verifyUserIsAuthenticated();
+    userAccessService.verifyUserIsAuthenticated()
+      .pipe(takeUntil(this.subject$))
+      .subscribe((x: boolean) => {
+        this.userIsAuthenticated = x;
         this.userModel.ToModel(this.userService.getUserStorage());
+        this.verifyService = true;
       }, (e: HttpErrorResponse | TimeoutError) => {
         console.log(e);
-        if (e instanceof TimeoutError) {
-          this.router.navigate(['/error/' + EnumHttpStatusCode.REQUEST_TIMEOUT]);
-          return;
-        }
-        this.router.navigate(['/error'])
+        if (e instanceof TimeoutError)
+          this.router.navigate(['./error/' + EnumHttpStatusCode.REQUEST_TIMEOUT]);
+        else
+          this.router.navigate(['./error']);
       });
   }
 
-  public logoutUser(): void {
-    this.userService.removeUserStorage();
-    this.router.navigate(['/user']);
+  ngOnInit(): void {
+  }
 
-    //this.loginService.logoutUser(this.userService.getUserStorage())
-    //  .pipe(take(1))
-    //  .subscribe(() => {
-    //  }, (e: HttpErrorResponse) => alert(e));
+  ngOnDestroy(): void {
+    this.subject$.next();
+    this.subject$.complete();
+  }
+
+  public logoutUser(): void {
+    this.userAccessService.logoutUser(Object.assign(new UserLogoutSignature(), this.userService.getUserStorage()))
+      .pipe(takeUntil(this.subject$))
+      .subscribe(() => {
+        this.userService.removeUserStorage();
+        this.router.navigate(['/user']);
+        this.userIsAuthenticated = false;
+      }, (e: HttpErrorResponse | TimeoutError) => {
+        if (e instanceof TimeoutError) {
+          this.modalService.showModal(ModalComponent, new Modal(null, MessageHelper.timeoutMessage, EnumModal.Warning));
+          return;
+        }
+
+        this.modalService.showModal(ModalComponent, new Modal(' - ERRO!', MessageHelper.errorMessage, EnumModal.Ok));
+      });
   }
 }

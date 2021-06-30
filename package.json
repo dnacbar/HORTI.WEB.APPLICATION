@@ -22,6 +22,7 @@
     "apexcharts": "^3.25.0",
     "bootstrap": "^5.0.0-beta2",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-ui-loader": "^10.0.0",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

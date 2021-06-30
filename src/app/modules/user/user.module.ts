@@ -9,6 +9,7 @@ import { UserComponent } from './user/user.component';
 import { FormsModule } from '@angular/forms';
 import { PasswordComponent } from './password/password.component';
 import { AccountComponent } from './account/account.component';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
   declarations: [LoginComponent, UserComponent, PasswordComponent, AccountComponent],
@@ -17,7 +18,8 @@ import { AccountComponent } from './account/account.component';
     UserRoutingModule,
     FormsModule,
     ModalModule.forChild(),
-    SharedModule
+    SharedModule,
+    NgxUiLoaderModule
   ]
 })
 export class UserModule { }
