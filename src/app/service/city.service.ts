@@ -14,7 +14,7 @@ export class CityService {
 
   constructor(private dataService: DataService) { }
 
-  public GetCities(signature: CitySignature): Observable<CityResult> {
+  public GetCity(signature: CitySignature): Observable<CityResult> {
     return this.dataService.GetObject(environment.urlBaseCoreQuery + UrlCoreQueryHelper.city.getCityByIdOrName, signature)
       .pipe(map(x => {
         return Object.assign(new CityResult, x);
@@ -31,7 +31,7 @@ export class CityService {
   public GetFullListOfCities(): Observable<CityResult[]> {
     return this.dataService.GetFullListOfObject(environment.urlBaseCoreQuery + UrlCoreQueryHelper.city.getFullListOfCities)
       .pipe(map(x => {
-        return <CityResult[]>x;
+        return Object.assign(new Array<CityResult>(), x);
       }));
   }
 }

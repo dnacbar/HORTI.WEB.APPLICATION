@@ -21,23 +21,25 @@ import { Modal } from './model/modal';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public userModel: User = new User();
+  public userModel: User;
   public userIsAuthenticated = false;
   public verifyService = false;
-
   private subject$ = new Subject();
 
   constructor(private userAccessService: UserAccessService,
     private userService: UserService,
     private modalService: ModalService,
     private router: Router) {
+  }
 
-    userAccessService.verifyUserIsAuthenticated()
+  ngOnInit(): void {
+    this.userAccessService.verifyUserIsAuthenticated()
       .pipe(takeUntil(this.subject$))
       .subscribe((x: boolean) => {
         this.userIsAuthenticated = x;
-        this.userModel.ToModel(this.userService.getUserStorage());
         this.verifyService = true;
+        this.userModel = new User(this.userService.getUserStorage());
+        
       }, (e: HttpErrorResponse | TimeoutError) => {
         console.log(e);
         if (e instanceof TimeoutError)
@@ -45,9 +47,6 @@ export class AppComponent implements OnInit, OnDestroy {
         else
           this.router.navigate(['./error']);
       });
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

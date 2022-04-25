@@ -19,32 +19,32 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(private userAccessService: UserAccessService,
     private router: Router) {
+  }
+
+  ngOnInit(): void {
     if (this.userAccessService.verifyUserSessionStorage()) {
-      router.navigate(['/home']);
+      this.router.navigate(['/home']);
       return;
     }
 
-    userAccessService.userIsAuthenticated$
+    this.userAccessService.userIsAuthenticated$
       .pipe(takeUntil(this.subject$))
       .subscribe((x: boolean) => {
         if (x == true)
           this.hideModal();
       });
 
-    userAccessService.accountReturn$
+    this.userAccessService.accountReturn$
       .pipe(takeUntil(this.subject$))
       .subscribe((x: boolean) => {
         this.account = x;
       });
 
-    userAccessService.passwordReturn$
+    this.userAccessService.passwordReturn$
       .pipe(takeUntil(this.subject$))
       .subscribe((x: boolean) => {
         this.password = x;
       });
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

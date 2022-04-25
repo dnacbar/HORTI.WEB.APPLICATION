@@ -1,5 +1,4 @@
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { InterceptorService } from './service/_shared/_interceptor.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './component/error-page/error-page.component';
 import { ModalComponent } from './component/modal/modal.component';
+
+import { InterceptorService } from './service/_shared/_interceptor.service';
 
 @NgModule({
   declarations: [

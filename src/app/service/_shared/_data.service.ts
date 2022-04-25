@@ -13,43 +13,32 @@ export class DataService {
 
   // QUERY
   public GetObject(url: string, signature: Signature): Observable<Object> {
-    return this.httpClient.post(url, signature)
-      .pipe(timeout(2000), catchError(x => { console.log(x); return throwError(x); }));
+    return this.httpClient.post(url, signature).pipe(timeout(2000));
   }
 
   public GetListOfObject(url: string, signature: Signature): Observable<Object> {
-    return this.httpClient.post(url, signature)
-      .pipe(timeout(8000), catchError(x => { console.log(x); return throwError(x); }));
+    return this.httpClient.post(url, signature).pipe(timeout(8000));
   }
 
   public GetFullListOfObject(url: string): Observable<Object> {
-    return this.httpClient.get(url)
-      .pipe(timeout(20000), catchError(x => { console.log(x); return throwError(x); }));
+    return this.httpClient.get(url).pipe(timeout(20000));
   }
 
   // COMMAND
   public CreateObject(url: string, signature: Signature): Observable<Object> {
-    return this.httpClient.post(url, signature)
-      .pipe(timeout(5000), catchError(x => { console.log(x); return throwError(x); }));
+    return this.httpClient.post(url, signature).pipe(timeout(5000));
   }
 
   public UpdateObject(url: string, signature: Signature): Observable<Object> {
-    return this.httpClient.put(url, signature)
-      .pipe(timeout(5000), catchError(x => { console.log(x); return throwError(x); }));
+    return this.httpClient.put(url, signature).pipe(timeout(5000));
   }
 
   public DeleteObject(url: string, signature: Signature): Observable<Object> {
-    const options = {
-      response: 'json',
-      body: signature
-    };
-    return this.httpClient.request('delete', url, options)
-      .pipe(timeout(2000), catchError(x => { console.log(x); return throwError(x); }));
+    return this.httpClient.request('delete', url, { body: signature }).pipe(timeout(2000));
   }
 
   // -------- VERIFY ------  
   public Get(url: string): Observable<Object> {
-    return this.httpClient.get(url)
-      .pipe(timeout(1000), catchError(x => { console.log(x); return throwError(x); }));
+    return this.httpClient.get(url).pipe(timeout(1000));
   }
 }

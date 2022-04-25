@@ -1,4 +1,7 @@
+import { CitySignature } from './../../../model/signature/city-signature';
+import { DataService } from './../../../service/_shared/_data.service';
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-home',
@@ -7,17 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  activeSlideIndex = 0;
+  public activeSlideIndex = 0;
 
-  slides = [
+  public slides = [
     { image: 'assets/assassins_creed_valhalla_video_game_ragnar_lothbrok-wallpaper-1920x1080.jpg', text: 'Assassins Creed' },
     { image: 'assets/counter_strike_global_offensive_13-wallpaper-1920x1080.jpg', text: 'CS:GO' },
     { image: 'assets/magic_3-wallpaper-1920x1080.jpg', text: 'Magic' },
     { image: 'assets/the_faunt-wallpaper-1920x1080.jpg', text: 'Cosmic' }
   ];
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+  }
+
+  public deletar(): void {
+    let signature = new CitySignature();
+    signature.City = 'Barra';
+    this.dataService.DeleteObject(environment.urlBaseCoreCommand + 'Client', signature)
+        .subscribe(x => console.log(x));
   }
 }

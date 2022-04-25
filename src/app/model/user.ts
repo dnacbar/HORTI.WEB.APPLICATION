@@ -1,9 +1,15 @@
 import { UserAccessResult } from "./result/user-access-result";
 
 export class User {
-    constructor() {
-        this.BoIsProducer = false;
+    constructor(result: UserAccessResult) {
+        if (!result)
+            return;
+
+        this.IdSession = result.IdSession;
+        this.DsLogin = result.Login;
+        this.DsToken = result.Token;
     }
+
     DsLogin = new String;
     DsUserName = new String;
     DsPassword = new String;
@@ -13,12 +19,6 @@ export class User {
     DsToken = new String;
     BoIsProducer = new Boolean;
     BoSessionExpire = new Boolean;
-
-    public ToModel(result: UserAccessResult): void {
-        this.IdSession = result.IdSession;
-        this.DsLogin = result.Login;
-        this.DsToken = result.Token;
-    }
 
     public validatePassword(): boolean {
         return this.verifyPassword() && this.DsPassword == this.DsConfirmPassword;

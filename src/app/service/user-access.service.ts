@@ -27,7 +27,7 @@ export class UserAccessService {
 
   public authenticateUser(signature: UserAccessSignature): Observable<UserAccessResult> {
     return this.dataService.GetObject(environment.urlBaseUserQuery + UrlUserQueryHelper.userSession.authenticateUserAccess, signature)
-      .pipe(map(x => {
+      .pipe(map((x: UserAccessResult) => {
         return Object.assign(new UserAccessResult, x);
       }));
   }

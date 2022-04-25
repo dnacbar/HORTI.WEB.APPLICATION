@@ -17,9 +17,9 @@ export class CityComponent implements OnInit, OnDestroy {
   constructor(private cityService: CityService) { }
 
   ngOnInit(): void {
-    const signature = new  CitySignature();
+    const signature = new CitySignature();
 
-    this.cityService.GetCities(signature)
+    this.cityService.GetCity(signature)
       .pipe(takeUntil(this.subject$))
       .subscribe(x => {
       }, e => {
