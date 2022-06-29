@@ -13,10 +13,10 @@ export class HomeComponent implements OnInit {
   public activeSlideIndex = 0;
 
   public slides = [
-    { image: 'assets/assassins_creed_valhalla_video_game_ragnar_lothbrok-wallpaper-1920x1080.jpg', text: 'Assassins Creed' },
-    { image: 'assets/counter_strike_global_offensive_13-wallpaper-1920x1080.jpg', text: 'CS:GO' },
-    { image: 'assets/magic_3-wallpaper-1920x1080.jpg', text: 'Magic' },
-    { image: 'assets/the_faunt-wallpaper-1920x1080.jpg', text: 'Cosmic' }
+    { image: 'assets/assassins_creed.jpg', text: 'Assassins Creed' },
+    { image: 'assets/counter_strike.jpg', text: 'CS:GO' },
+    { image: 'assets/magic.jpg', text: 'Magic' },
+    { image: 'assets/the_faunt.jpg', text: 'Cosmic' }
   ];
 
   constructor(private dataService: DataService) { }

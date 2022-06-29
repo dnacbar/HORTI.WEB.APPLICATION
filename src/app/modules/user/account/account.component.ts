@@ -19,7 +19,7 @@ import { Modal } from 'src/app/model/modal';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  public userModel: User = new User();
+  public userModel: User = new User(null);
 
   constructor(private userService: UserService,
     private userAccessService: UserAccessService,

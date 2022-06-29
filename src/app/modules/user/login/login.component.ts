@@ -21,7 +21,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public userModel: User = new User();
+  public userModel: User = new User(null);
   public loaderLogin = 'loaderLogin';
   
   constructor(private userService: UserService,
